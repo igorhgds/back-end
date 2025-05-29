@@ -68,7 +68,7 @@ public class TransactionRestController implements TransactionControllerSpecs {
     }
 
     @GetMapping("/detailed")
-    public ResponseEntity<List<TransactionDetailedOutputDTO>> getDetailedTransactions(TransactionDetailedInputDTO inputDTO) {
+    public ResponseEntity<List<TransactionDetailedDTO>> getDetailedTransactions(TransactionDetailedInputDTO inputDTO) {
         return ResponseEntity.ok(detailedTransactionsUseCase.execute(inputDTO.getBranch(), inputDTO.getStartDate(), inputDTO.getEndDate()));
     }
 }

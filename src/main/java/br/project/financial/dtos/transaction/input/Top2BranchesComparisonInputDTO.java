@@ -3,11 +3,12 @@ package br.project.financial.dtos.transaction.input;
 import br.project.financial.enums.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-@Data
+@Getter
 @AllArgsConstructor
 public class Top2BranchesComparisonInputDTO {
 
