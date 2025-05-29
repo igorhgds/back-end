@@ -1,5 +1,6 @@
 package br.project.financial.rest.specs;
 
+import br.project.financial.dtos.transaction.input.TransactionRevenueInputDTO;
 import br.project.financial.dtos.transaction.output.*;
 import br.project.financial.enums.TransactionType;
 import br.project.financial.rest.specs.commons.response.error.*;
@@ -23,10 +24,7 @@ public interface TransactionControllerSpecs {
     @ApiResponseBadRequest
     @ApiResponseNotFound
     @GetMapping
-    ResponseEntity<TransactionRevenueDTO> getRevenueByTypeAndDate(
-            @RequestParam("type") TransactionType transactionType,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
-    );
+    ResponseEntity<TransactionRevenueOutputDTO> getRevenueByTypeAndDate(TransactionRevenueInputDTO inputDTO);
 
     @Operation(summary = "Get transaction by type and period")
     @ApiResponseBadRequest
@@ -34,7 +32,7 @@ public interface TransactionControllerSpecs {
     @ApiResponseInvalidPeriod
     @ApiResponseNoTransactionsFound
     @GetMapping("/period")
-    ResponseEntity<TransactionRevenueDTO> getRevenueByTypeAndPeriod(
+    ResponseEntity<TransactionRevenueOutputDTO> getRevenueByTypeAndPeriod(
             @RequestParam("type") TransactionType transactionType,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate

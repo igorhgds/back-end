@@ -1,6 +1,6 @@
 package br.project.financial.repositories.transaction;
 
-import br.project.financial.dtos.transaction.output.TransactionRevenueDTO;
+import br.project.financial.dtos.transaction.output.TransactionRevenueOutputDTO;
 import br.project.financial.dtos.transaction.output.BranchTransactionRevenueDTO;
 import br.project.financial.dtos.transaction.output.BranchAmountDTO;
 import br.project.financial.entities.Transaction;
@@ -27,7 +27,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
                 WHERE t.transactionType = :transactionType
                   AND t.date BETWEEN :startDate AND :endDate
             """)
-    TransactionRevenueDTO sumByTypeAndPeriod(
+    TransactionRevenueOutputDTO sumByTypeAndPeriod(
             @Param("transactionType") TransactionType transactionType,
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate

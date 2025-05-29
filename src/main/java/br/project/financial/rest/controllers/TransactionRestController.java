@@ -1,5 +1,6 @@
 package br.project.financial.rest.controllers;
 
+import br.project.financial.dtos.transaction.input.TransactionRevenueInputDTO;
 import br.project.financial.dtos.transaction.output.*;
 import br.project.financial.enums.TransactionType;
 import br.project.financial.rest.specs.TransactionControllerSpecs;
@@ -39,15 +40,13 @@ public class TransactionRestController implements TransactionControllerSpecs {
     }
 
     @GetMapping
-    public ResponseEntity<TransactionRevenueDTO> getRevenueByTypeAndDate(
-            @RequestParam("type") TransactionType transactionType,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date
-    ) {
-        return ResponseEntity.ok(byDateUseCase.execute(transactionType, date));
+    public ResponseEntity<TransactionRevenueOutputDTO> getRevenueByTypeAndDate(
+            @ModelAttribute TransactionRevenueInputDTO inputDTO){
+        return ResponseEntity.ok(byDateUseCase.execute(inputDTO.getTransactionType(), inputDTO.getDate()));
     }
 
-    @GetMapping("/period")
-    public ResponseEntity<TransactionRevenueDTO> getRevenueByTypeAndPeriod(
+            @GetMapping("/period")
+    public ResponseEntity<TransactionRevenueOutputDTO> getRevenueByTypeAndPeriod(
             @RequestParam("type") TransactionType transactionType,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
