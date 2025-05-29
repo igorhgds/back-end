@@ -1,5 +1,6 @@
 package br.project.financial.rest.controllers;
 
+import br.project.financial.dtos.transaction.input.BranchTransactionRevenueInputDTO;
 import br.project.financial.dtos.transaction.input.TransactionRevenueByDateInputDTO;
 import br.project.financial.dtos.transaction.input.TransactionRevenueByPeriodInputDTO;
 import br.project.financial.dtos.transaction.output.*;
@@ -52,13 +53,8 @@ public class TransactionRestController implements TransactionControllerSpecs {
     }
 
     @GetMapping("/branch")
-    public ResponseEntity<BranchTransactionRevenueDTO> getRevenueByBranchTypeAndPeriod(
-            @RequestParam("type") TransactionType transactionType,
-            @RequestParam String branch,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
-    ) {
-        return ResponseEntity.ok(byBranchUseCase.execute(transactionType, branch, startDate, endDate));
+    public ResponseEntity<BranchTransactionRevenueDTO> getRevenueByBranchTypeAndPeriod(BranchTransactionRevenueInputDTO inputDTO) {
+        return ResponseEntity.ok(byBranchUseCase.execute(inputDTO.getTransactionType(), inputDTO.getBranch(), inputDTO.getStartDate(), inputDTO.getEndDate()));
     }
 
     @GetMapping("/branch/top")

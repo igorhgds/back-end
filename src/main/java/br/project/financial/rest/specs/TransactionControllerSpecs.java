@@ -1,5 +1,6 @@
 package br.project.financial.rest.specs;
 
+import br.project.financial.dtos.transaction.input.BranchTransactionRevenueInputDTO;
 import br.project.financial.dtos.transaction.input.TransactionRevenueByDateInputDTO;
 import br.project.financial.dtos.transaction.input.TransactionRevenueByPeriodInputDTO;
 import br.project.financial.dtos.transaction.output.*;
@@ -41,12 +42,7 @@ public interface TransactionControllerSpecs {
     @ApiResponseNotFound
     @ApiResponseNoTransactionsFound
     @GetMapping("/branch")
-    ResponseEntity<BranchTransactionRevenueDTO> getRevenueByBranchTypeAndPeriod(
-            @RequestParam("type") TransactionType transactionType,
-            @RequestParam String branch,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
-    );
+    ResponseEntity<BranchTransactionRevenueDTO> getRevenueByBranchTypeAndPeriod(BranchTransactionRevenueInputDTO inputDTO);
 
     @Operation(summary = "get the branch that had the highest value by transaction type")
     @ApiResponseBadRequest
