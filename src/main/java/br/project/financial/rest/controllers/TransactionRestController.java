@@ -1,17 +1,17 @@
 package br.project.financial.rest.controllers;
 
+import br.project.financial.dtos.transaction.input.BranchAmountInputDTO;
 import br.project.financial.dtos.transaction.input.BranchTransactionRevenueInputDTO;
+import br.project.financial.dtos.transaction.input.Top2BranchesComparisonInputDTO;
+import br.project.financial.dtos.transaction.input.TransactionDetailedInputDTO;
 import br.project.financial.dtos.transaction.input.TransactionRevenueByDateInputDTO;
 import br.project.financial.dtos.transaction.input.TransactionRevenueByPeriodInputDTO;
 import br.project.financial.dtos.transaction.output.*;
-import br.project.financial.enums.TransactionType;
 import br.project.financial.rest.specs.TransactionControllerSpecs;
 import br.project.financial.usecases.transaction.*;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -53,32 +53,22 @@ public class TransactionRestController implements TransactionControllerSpecs {
     }
 
     @GetMapping("/branch")
-    public ResponseEntity<BranchTransactionRevenueDTO> getRevenueByBranchTypeAndPeriod(BranchTransactionRevenueInputDTO inputDTO) {
+    public ResponseEntity<BranchTransactionRevenueOutputDTO> getRevenueByBranchTypeAndPeriod(BranchTransactionRevenueInputDTO inputDTO) {
         return ResponseEntity.ok(byBranchUseCase.execute(inputDTO.getTransactionType(), inputDTO.getBranch(), inputDTO.getStartDate(), inputDTO.getEndDate()));
     }
 
     @GetMapping("/branch/top")
-    public ResponseEntity<BranchAmountDTO> getTopBranchByType(
-            @RequestParam("type") TransactionType transactionType
-    ) {
-        return ResponseEntity.ok(topBranchUseCase.execute(transactionType));
+    public ResponseEntity<BranchAmountOutputDTO> getTopBranchByType(BranchAmountInputDTO inputDTO) {
+        return ResponseEntity.ok(topBranchUseCase.execute(inputDTO.getTransactionType()));
     }
 
     @GetMapping("/comparison")
-    public ResponseEntity<Top2BranchesComparisonDTO> compareTop2Branches(
-            @RequestParam("type") TransactionType transactionType,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
-    ) {
-        return ResponseEntity.ok(comparisonUseCase.execute(transactionType, startDate, endDate));
+    public ResponseEntity<Top2BranchesComparisonDTO> compareTop2Branches(Top2BranchesComparisonInputDTO inputDTO) {
+        return ResponseEntity.ok(comparisonUseCase.execute(inputDTO.getTransactionType(), inputDTO.getStartDate(), inputDTO.getEndDate()));
     }
 
     @GetMapping("/detailed")
-    public ResponseEntity<List<TransactionDetailedDTO>> getDetailedTransactions(
-            @RequestParam String branch,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
-    ) {
-        return ResponseEntity.ok(detailedTransactionsUseCase.execute(branch, startDate, endDate));
+    public ResponseEntity<List<TransactionDetailedOutputDTO>> getDetailedTransactions(TransactionDetailedInputDTO inputDTO) {
+        return ResponseEntity.ok(detailedTransactionsUseCase.execute(inputDTO.getBranch(), inputDTO.getStartDate(), inputDTO.getEndDate()));
     }
 }
