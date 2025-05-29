@@ -1,6 +1,7 @@
 package br.project.financial.rest.controllers;
 
-import br.project.financial.dtos.transaction.input.TransactionRevenueInputDTO;
+import br.project.financial.dtos.transaction.input.TransactionRevenueByDateInputDTO;
+import br.project.financial.dtos.transaction.input.TransactionRevenueByPeriodInputDTO;
 import br.project.financial.dtos.transaction.output.*;
 import br.project.financial.enums.TransactionType;
 import br.project.financial.rest.specs.TransactionControllerSpecs;
@@ -41,17 +42,13 @@ public class TransactionRestController implements TransactionControllerSpecs {
 
     @GetMapping
     public ResponseEntity<TransactionRevenueOutputDTO> getRevenueByTypeAndDate(
-            @ModelAttribute TransactionRevenueInputDTO inputDTO){
+            @ModelAttribute TransactionRevenueByDateInputDTO inputDTO){
         return ResponseEntity.ok(byDateUseCase.execute(inputDTO.getTransactionType(), inputDTO.getDate()));
     }
 
             @GetMapping("/period")
-    public ResponseEntity<TransactionRevenueOutputDTO> getRevenueByTypeAndPeriod(
-            @RequestParam("type") TransactionType transactionType,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
-    ) {
-        return ResponseEntity.ok(byPeriodUseCase.execute(transactionType, startDate, endDate));
+    public ResponseEntity<TransactionRevenueOutputDTO> getRevenueByTypeAndPeriod(TransactionRevenueByPeriodInputDTO inputDTO) {
+        return ResponseEntity.ok(byPeriodUseCase.execute(inputDTO.getTransactionType(), inputDTO.getStartDate(), inputDTO.getEndDate()));
     }
 
     @GetMapping("/branch")

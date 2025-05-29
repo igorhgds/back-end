@@ -17,7 +17,7 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
     @Query("""
-                SELECT new br.project.financial.dtos.transaction.output.TransactionRevenueDTO(
+                SELECT new br.project.financial.dtos.transaction.output.TransactionRevenueOutputDTO(
                     t.transactionType,
                     :startDate,
                     :endDate,

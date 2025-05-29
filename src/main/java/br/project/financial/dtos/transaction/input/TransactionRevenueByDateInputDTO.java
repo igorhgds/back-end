@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransactionRevenueInputDTO {
+public class TransactionRevenueByDateInputDTO {
     private TransactionType transactionType;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
