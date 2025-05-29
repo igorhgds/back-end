@@ -1,7 +1,6 @@
 package br.project.financial.dtos.transaction.input;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
 
